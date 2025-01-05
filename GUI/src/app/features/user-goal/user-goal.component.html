@@ -1,0 +1,57 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2 class="text-center mb-4">Set Your Goal</h2>
+    <form [formGroup]="goalForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Weight (kg)</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="weight"
+          placeholder="Enter your weight"
+        />
+        @if (goalForm.get('weight')?.hasError('required')) {
+        <mat-error>Weight is required</mat-error>
+        }@else if (goalForm.get('weight')?.hasError('min')) {<mat-error
+          >Minimum weight is 30 kg</mat-error
+        >}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Height (cm)</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="height"
+          placeholder="Enter your height"
+        />
+        @if (goalForm.get('height')?.hasError('required')) {<mat-error
+          >Height is required</mat-error
+        >}@else if (goalForm.get('height')?.hasError('min')) {<mat-error
+          >Minimum height is 100 cm</mat-error
+        >}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Goal</mat-label>
+        <mat-select formControlName="goal">
+          <mat-option value="lose">Lose Weight</mat-option>
+          <mat-option value="gain">Gain Weight</mat-option>
+          <mat-option value="maintain">Maintain Weight</mat-option>
+        </mat-select>
+        @if (goalForm.get('goal')?.hasError('required')) {<mat-error
+          >Goal is required</mat-error
+        >}
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="w-100"
+        [disabled]="goalForm.invalid"
+      >
+        Save Goal
+      </button>
+    </form>
+  </div>
+</div>
