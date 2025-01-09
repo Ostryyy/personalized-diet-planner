@@ -4,6 +4,8 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -38,9 +40,14 @@ export class UserInformationsComponent {
     private router: Router
   ) {
     this.userInfoForm = this.fb.group({
-      weight: ['', [Validators.required, Validators.min(30)]],
-      height: ['', [Validators.required, Validators.min(100)]],
-      goal: ['', Validators.required],
+      weight: [null, [Validators.required, Validators.min(30)]],
+      height: [null, [Validators.required, Validators.min(100)]],
+      age: [null, [Validators.required, Validators.min(10)]],
+      gender: [null, Validators.required],
+      activityLevel: [null, Validators.required],
+      excludes: ['', [this.excludeValidator]],
+      dietType: ['', Validators.required],
+      goal: [null, Validators.required],
     });
   }
 
@@ -55,8 +62,20 @@ export class UserInformationsComponent {
             this.router.navigate(['/']);
           },
           error: () =>
-            this.toastr.error('Failed to update user information. Please try again.'),
+            this.toastr.error(
+              'Failed to update user information. Please try again.'
+            ),
         });
     }
+  }
+
+  excludeValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) {
+      return null;
+    }
+
+    const valid = /^[a-zA-Z\s,]*$/.test(value);
+    return valid ? null : { invalidExcludes: true };
   }
 }

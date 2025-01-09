@@ -46,7 +46,17 @@ export class AuthService {
   updateUserInformations(informationsData: {
     weight: number;
     height: number;
+    age: number;
+    gender: 'male' | 'female' | 'other';
+    activityLevel:
+      | 'sedentary'
+      | 'light'
+      | 'moderate'
+      | 'active'
+      | 'very active';
     goal: 'lose' | 'gain' | 'maintain';
+    dietType: string;
+    excludes: string;
   }): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/profile`, informationsData);
   }

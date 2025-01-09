@@ -10,12 +10,11 @@
           formControlName="weight"
           placeholder="Enter your current weight"
         />
-
-        @if (userInfoForm.get('weight')?.hasError('required')) {<mat-error>
-          Weight is required </mat-error
-        >} @if (userInfoForm.get('weight')?.hasError('min')) {<mat-error>
-          Minimum weight is 30 kg </mat-error
-        >}
+        @if (userInfoForm.get('weight')?.hasError('required')) {
+        <mat-error>Weight is required</mat-error> } @if
+        (userInfoForm.get('weight')?.hasError('min')) {
+        <mat-error>Minimum weight is 30 kg</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-100 mb-3">
@@ -26,11 +25,51 @@
           formControlName="height"
           placeholder="Enter your height"
         />
-        @if (userInfoForm.get('height')?.hasError('required')) {<mat-error>
-          Height is required </mat-error
-        >} @if (userInfoForm.get('height')?.hasError('min')) {<mat-error>
-          Minimum height is 100 cm </mat-error
+        @if (userInfoForm.get('height')?.hasError('required')) {
+        <mat-error>Height is required</mat-error>
+        } @if (userInfoForm.get('height')?.hasError('min')) {<mat-error
+          >Minimum height is 100 cm</mat-error
         >}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Age</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="age"
+          placeholder="Enter your age"
+        />
+        @if (userInfoForm.get('age')?.hasError('required')) {<mat-error
+          >Age is required</mat-error
+        >} @if (userInfoForm.get('age')?.hasError('min')) {<mat-error
+          >Minimum age is 10 years</mat-error
+        >}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+          <mat-option value="other">Other</mat-option>
+        </mat-select>
+        @if (userInfoForm.get('gender')?.hasError('required')) {<mat-error
+          >Gender is required</mat-error
+        >}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Activity Level</mat-label>
+        <mat-select formControlName="activityLevel">
+          <mat-option value="sedentary">Sedentary</mat-option>
+          <mat-option value="light">Light</mat-option>
+          <mat-option value="moderate">Moderate</mat-option>
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="very active">Very Active</mat-option>
+        </mat-select>
+        @if (userInfoForm.get('activityLevel')?.hasError('required')) {
+        <mat-error>Activity level is required</mat-error>}
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-100 mb-3">
@@ -41,7 +80,32 @@
           <mat-option value="maintain">Maintain Weight</mat-option>
         </mat-select>
         @if (userInfoForm.get('goal')?.hasError('required')) {
-        <mat-error> Goal is required </mat-error>}
+        <mat-error>Goal is required</mat-error>}
+      </mat-form-field>
+      
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Diet Type</mat-label>
+        <mat-select formControlName="dietType">
+          <mat-option value="balanced">Balanced</mat-option>
+          <mat-option value="low-carb">Low Carb</mat-option>
+          <mat-option value="high-protein">High Protein</mat-option>
+          <mat-option value="vegan">Vegan</mat-option>
+          <mat-option value="vegetarian">Vegetarian</mat-option>
+          <mat-option value="keto">Keto</mat-option>
+        </mat-select>
+        @if (userInfoForm.get('dietType')?.hasError('required')) {<mat-error>
+          Diet type is required </mat-error
+        >}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Excludes (comma-separated)</mat-label>
+        <textarea
+          matInput
+          formControlName="excludes"
+          placeholder="Enter ingredients to exclude (e.g., nuts, dairy)"
+        ></textarea>
       </mat-form-field>
 
       <button

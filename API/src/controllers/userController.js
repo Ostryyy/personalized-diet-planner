@@ -67,6 +67,7 @@ export const loginUser = async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      dailyCalories: user.dailyCalories,
       token: generateToken(user.id),
     });
   } else {
@@ -82,11 +83,7 @@ export const getUserProfile = async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      weight: user.weight,
-      height: user.height,
-      goal: user.goal,
-      goalsSet: user.goalsSet,
-      mealPlans: user.mealPlans,
+      dailyCalories: user.dailyCalories,
     });
   } else {
     res.status(404).json({ message: "User not found" });
@@ -95,7 +92,16 @@ export const getUserProfile = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   const userId = req.user.id;
-  const { weight, height, goal } = req.body;
+  const {
+    weight,
+    height,
+    goal,
+    age,
+    gender,
+    activityLevel,
+    excludes,
+    dietType,
+  } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -111,8 +117,22 @@ export const updateUserProfile = async (req, res) => {
 
     user.height = height || user.height;
     user.goal = goal || user.goal;
+    user.age = age || user.age;
+    user.gender = gender || user.gender;
+    user.activityLevel = activityLevel || user.activityLevel;
+    user.excludes = excludes || user.excludes;
+    user.dietType = dietType || user.dietType;
 
-    if (weight || height || goal) {
+    if (
+      weight ||
+      height ||
+      goal ||
+      age ||
+      gender ||
+      activityLevel ||
+      excludes ||
+      dietType
+    ) {
       user.goalsSet = true;
     }
 
@@ -125,7 +145,13 @@ export const updateUserProfile = async (req, res) => {
       weight: updatedUser.weight,
       height: updatedUser.height,
       goal: updatedUser.goal,
+      age: updatedUser.age,
+      gender: updatedUser.gender,
+      activityLevel: updatedUser.activityLevel,
       weightHistory: updatedUser.weightHistory,
+      excludes: updatedUser.excludes,
+      dietType: updatedUser.dietType,
+      dailyCalories: updatedUser.dailyCalories,
       goalsSet: updatedUser.goalsSet,
     });
   } catch (error) {

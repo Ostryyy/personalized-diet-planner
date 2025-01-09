@@ -6,6 +6,11 @@ const weightEntrySchema = mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
+const mealPlanSchema = mongoose.Schema({
+  date: { type: Date, default: Date.now },
+  plan: { type: Map, of: Object, default: {} },
+});
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -33,6 +38,20 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "Password is required"],
+    },
+    age: {
+      type: Number,
+      default: null,
+    },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      default: null,
+    },
+    activityLevel: {
+      type: String,
+      enum: ["sedentary", "light", "moderate", "active", "very active"],
+      default: "sedentary",
     },
     spoonacularUsername: {
       type: String,
@@ -62,10 +81,30 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     mealPlans: {
-      date: { type: Date, default: Date.now },
-      plan: { type: Object, required: true },
+      type: mealPlanSchema,
+      default: { plan: {} },
     },
     weightHistory: [weightEntrySchema],
+    excludes: {
+      type: [String],
+      default: [],
+    },
+    dailyCalories: {
+      type: Number,
+      default: null,
+    },
+    dietType: {
+      type: String,
+      enum: [
+        "balanced",
+        "low-carb",
+        "high-protein",
+        "vegan",
+        "vegetarian",
+        "keto",
+      ],
+      default: "balanced",
+    },
   },
   {
     timestamps: true,

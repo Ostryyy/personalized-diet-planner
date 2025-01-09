@@ -31,6 +31,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'meal-plan',
+    loadComponent: () =>
+      import('./features/meal-plan/meal-plan.component').then(
+        (m) => m.MealPlanComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',

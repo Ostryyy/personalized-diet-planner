@@ -1,0 +1,47 @@
+@if (mealPlan) {
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Weekly Meal Plan</h2>
+
+  @for (day of getWeekDays(); track $index) {
+  <div class="row mb-4">
+    <div class="col-12">
+      <h3 class="text-primary">{{ day | titlecase }}</h3>
+    </div>
+    @for (meal of mealPlan[day].meals; track $index) {
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
+      <mat-card class="meal-card">
+        <mat-card-header>
+          <mat-card-title>{{ meal.title }}</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          [src]="
+            'https://spoonacular.com/recipeImages/' +
+            meal.id +
+            '-312x231.' +
+            meal.imageType
+          "
+          alt="{{ meal.title }}"
+        />
+        <mat-card-content>
+          <p>Ready in {{ meal.readyInMinutes }} minutes</p>
+          <p>Servings: {{ meal.servings }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="accent" (click)="viewRecipe(meal.id)">
+            View Recipe
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    }
+  </div>
+  }
+</div>
+} @else {
+<div class="text-center mt-5">
+  <button mat-raised-button color="primary" (click)="generateMealPlan()">
+    Generate Diet Plan
+  </button>
+</div>
+}
