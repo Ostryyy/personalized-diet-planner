@@ -51,7 +51,7 @@ export class LoginComponent {
         .subscribe({
           next: () => {
             this.toastr.success('Login successful!');
-            this.router.navigate(['/user-goal']);
+            this.router.navigate(['/']);
           },
           error: () => this.toastr.error('Login failed. Please try again.'),
         });
