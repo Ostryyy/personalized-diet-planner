@@ -2,6 +2,12 @@
   max-width: 1200px;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
 .meal-card {
   display: flex;
   flex-direction: column;
@@ -12,6 +18,10 @@
 }
 
 mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,6 +33,20 @@ mat-card-image {
   width: 100%;
   height: 180px;
   object-fit: cover;
+}
+
+mat-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 68px;
+  line-height: 1.5em;
+}
+
+mat-card-content {
+  text-align: center;
 }
 
 mat-card-actions {
