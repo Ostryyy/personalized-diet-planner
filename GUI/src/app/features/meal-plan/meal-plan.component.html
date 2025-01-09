@@ -6,16 +6,16 @@
   <div class="row mb-4">
     <div class="col-12">
       <h3 class="text-primary space">
-        {{ day | titlecase
-        }}<span class="text-muted">
+        {{ day | titlecase }}
+        <span class="text-muted">
           ({{ mealPlan[day].nutrients.calories | number : "1.0-0" }} kcal,
           {{ mealPlan[day].nutrients.protein | number : "1.0-1" }}g protein,
           {{ mealPlan[day].nutrients.fat | number : "1.0-1" }}g fat,
-          {{ mealPlan[day].nutrients.carbohydrates | number : "1.0-1" }}g
-          carbs)
+          {{ mealPlan[day].nutrients.carbohydrates | number : "1.0-1" }}g carbs)
         </span>
       </h3>
     </div>
+
     @for (meal of mealPlan[day].meals; track $index) {
     <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
       <mat-card class="meal-card">
@@ -46,6 +46,17 @@
     }
   </div>
   }
+
+  <div class="text-center mt-5">
+    <button
+      mat-raised-button
+      color="warn"
+      class="large-button"
+      (click)="showConfirmationDialog()"
+    >
+      Generate New Meal Plan
+    </button>
+  </div>
 </div>
 } @else {
 <div class="text-center mt-5">

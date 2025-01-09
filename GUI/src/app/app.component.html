@@ -29,7 +29,29 @@
         </li>
         }@else{
         <li class="nav-item">
-          <button class="btn" (click)="authService.logout()">Logout</button>
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"
+            >Dashboard</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/meal-plan" routerLinkActive="active"
+            >Meal Plans</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/settings" routerLinkActive="active"
+            >Settings</a
+          >
+        </li>
+        <li class="nav-item">
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="authService.logout()"
+          >
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
         </li>
         }
       </ul>

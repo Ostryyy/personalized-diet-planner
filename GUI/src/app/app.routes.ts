@@ -4,7 +4,7 @@ import { goalGuard } from './core/guards/goal.guard';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     loadComponent: () =>
       import('./features/home/home.component').then((m) => m.HomeComponent),
     canActivate: [authGuard, goalGuard],
@@ -24,7 +24,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'user-informations',
+    path: 'settings',
     loadComponent: () =>
       import('./features/user-informations/user-informations.component').then(
         (m) => m.UserInformationsComponent
@@ -49,11 +49,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
   },
 ];

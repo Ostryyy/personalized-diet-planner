@@ -15,6 +15,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MealPlanService } from '../../core/services/meal.service';
 
 @Component({
   selector: 'app-user-informations',
@@ -32,12 +35,15 @@ import { Router } from '@angular/router';
 export class UserInformationsComponent {
   userInfoForm: FormGroup;
   destroyRef = inject(DestroyRef);
+  isFormPreFilled = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private mealPlanService: MealPlanService
   ) {
     this.userInfoForm = this.fb.group({
       weight: [null, [Validators.required, Validators.min(30)]],
@@ -58,6 +64,7 @@ export class UserInformationsComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((user) => {
         if (user) {
+          this.isFormPreFilled = true;
           this.userInfoForm.patchValue({
             weight: user.weight || null,
             height: user.height || null,
@@ -80,7 +87,11 @@ export class UserInformationsComponent {
         .subscribe({
           next: () => {
             this.toastr.success('User information updated successfully!');
-            this.router.navigate(['/']);
+            if (this.isFormPreFilled) {
+              this.showConfirmationDialog();
+            } else {
+              this.router.navigate(['/']);
+            }
           },
           error: () =>
             this.toastr.error(
@@ -88,6 +99,39 @@ export class UserInformationsComponent {
             ),
         });
     }
+  }
+
+  showConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Generate New Meal Plan?',
+        message: 'Your previous plan will be lost. Do you want to continue?',
+      },
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.generateMealPlanAndRedirect();
+        }
+      });
+  }
+
+  private generateMealPlanAndRedirect(): void {
+    this.mealPlanService
+      .generateMealPlan()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.toastr.success('Meal plan generated successfully!');
+          this.router.navigate(['/meal-plan']);
+        },
+        error: () => {
+          this.toastr.error('Failed to generate meal plan. Please try again.');
+        },
+      });
   }
 
   excludeValidator(control: AbstractControl): ValidationErrors | null {
