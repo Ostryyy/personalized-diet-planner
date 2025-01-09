@@ -49,6 +49,27 @@ export class UserInformationsComponent {
       dietType: ['', Validators.required],
       goal: [null, Validators.required],
     });
+
+    this.loadUserInformations();
+  }
+
+  loadUserInformations(): void {
+    this.authService.currentUser$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((user) => {
+        if (user) {
+          this.userInfoForm.patchValue({
+            weight: user.weight || null,
+            height: user.height || null,
+            age: user.age || null,
+            gender: user.gender || null,
+            activityLevel: user.activityLevel || null,
+            excludes: user.excludes ? user.excludes.join(', ') : '',
+            dietType: user.dietType || '',
+            goal: user.goal || null,
+          });
+        }
+      });
   }
 
   updateUserInformations(): void {
