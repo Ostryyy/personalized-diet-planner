@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema(
       enum: ["lose", "gain", "maintain"],
       default: "maintain",
     },
+    goalsSet: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

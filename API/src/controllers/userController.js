@@ -85,6 +85,7 @@ export const getUserProfile = async (req, res) => {
       weight: user.weight,
       height: user.height,
       goal: user.goal,
+      goalsSet: user.goalsSet,
     });
   } else {
     res.status(404).json({ message: "User not found" });
@@ -107,6 +108,10 @@ export const updateUserProfile = async (req, res) => {
     user.height = height || user.height;
     user.goal = goal || user.goal;
 
+    if (weight || height || goal) {
+      user.goalsSet = true;
+    }
+
     const updatedUser = await user.save();
 
     res.status(200).json({
@@ -116,6 +121,7 @@ export const updateUserProfile = async (req, res) => {
       weight: updatedUser.weight,
       height: updatedUser.height,
       goal: updatedUser.goal,
+      goalsSet: updatedUser.goalsSet,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
