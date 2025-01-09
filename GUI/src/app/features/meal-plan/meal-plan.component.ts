@@ -6,6 +6,7 @@ import { MealPlanService } from '../../core/services/meal.service';
 import { TitleCasePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meal-plan',
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class MealPlanComponent {
   mealPlan: WeeklyMealPlan | null = null;
   destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   constructor(
     private mealPlanService: MealPlanService,
@@ -64,6 +66,6 @@ export class MealPlanComponent {
   }
 
   viewRecipe(recipeId: number): void {
-    console.log('Recipe ID:', recipeId);
+    this.router.navigate(['/recipe', recipeId]);
   }
 }

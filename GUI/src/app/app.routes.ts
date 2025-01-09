@@ -39,6 +39,14 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'recipe/:id',
+    loadComponent: () =>
+      import('./features/recipe-details/recipe-details.component').then(
+        (m) => m.RecipeDetailsComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',

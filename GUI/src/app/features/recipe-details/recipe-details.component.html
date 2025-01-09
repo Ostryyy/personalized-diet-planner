@@ -1,0 +1,57 @@
+@if (recipe) {
+<div class="container mt-5">
+  <button mat-button color="primary" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </button>
+
+  <mat-card class="recipe-card">
+    <mat-card-header>
+      <mat-card-title>{{ recipe.title }}</mat-card-title>
+    </mat-card-header>
+
+    <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}" />
+
+    <mat-card-content>
+      <p><strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes</p>
+      <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+      <p class="recipe-source">
+        <strong>Source:</strong>
+        <a [href]="recipe.sourceUrl" target="_blank">{{ recipe.sourceUrl }}</a>
+      </p>
+
+      <h4>Macronutrients (Per Serving)</h4>
+      <ul>
+        <li>
+          <strong>Calories:</strong>
+          {{ getNutrientValue("Calories") | number : "1.0-0" }} kcal
+        </li>
+        <li>
+          <strong>Protein:</strong>
+          {{ getNutrientValue("Protein") | number : "1.1-1" }} g
+        </li>
+        <li>
+          <strong>Carbohydrates:</strong>
+          {{ getNutrientValue("Carbohydrates") | number : "1.1-1" }} g
+        </li>
+        <li>
+          <strong>Fat:</strong>
+          {{ getNutrientValue("Fat") | number : "1.1-1" }} g
+        </li>
+      </ul>
+
+      <h4>Ingredients</h4>
+      <ul>
+        @for (ingredient of recipe.extendedIngredients; track $index) {
+        <li>
+          {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
+        </li>
+        }
+      </ul>
+
+      <h4>Instructions</h4>
+      <div [innerHTML]="recipe.instructions"></div>
+    </mat-card-content>
+  </mat-card>
+</div>
+}
