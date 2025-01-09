@@ -23,10 +23,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'user-goal',
+    path: 'user-informations',
     loadComponent: () =>
-      import('./features/user-goal/user-goal.component').then(
-        (m) => m.UserGoalComponent
+      import('./features/user-informations/user-informations.component').then(
+        (m) => m.UserInformationsComponent
       ),
     canActivate: [authGuard],
   },

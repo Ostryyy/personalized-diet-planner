@@ -15,10 +15,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user-goal',
+  selector: 'app-user-informations',
   standalone: true,
-  templateUrl: './user-goal.component.html',
-  styleUrls: ['./user-goal.component.scss'],
+  templateUrl: './user-informations.component.html',
+  styleUrls: ['./user-informations.component.scss'],
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -27,34 +27,35 @@ import { Router } from '@angular/router';
     MatButtonModule,
   ],
 })
-export class UserGoalComponent {
-  goalForm: FormGroup;
+export class UserInformationsComponent {
+  userInfoForm: FormGroup;
   destroyRef = inject(DestroyRef);
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastr: ToastrService,private router: Router,
+    private toastr: ToastrService,
+    private router: Router
   ) {
-    this.goalForm = this.fb.group({
+    this.userInfoForm = this.fb.group({
       weight: ['', [Validators.required, Validators.min(30)]],
       height: ['', [Validators.required, Validators.min(100)]],
       goal: ['', Validators.required],
     });
   }
 
-  onSubmit(): void {
-    if (this.goalForm.valid) {
+  updateUserInformations(): void {
+    if (this.userInfoForm.valid) {
       this.authService
-        .updateUserGoal(this.goalForm.value)
+        .updateUserInformations(this.userInfoForm.value)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            this.toastr.success('Goal updated successfully!');
+            this.toastr.success('User information updated successfully!');
             this.router.navigate(['/']);
           },
           error: () =>
-            this.toastr.error('Failed to update goal. Please try again.'),
+            this.toastr.error('Failed to update user information. Please try again.'),
         });
     }
   }

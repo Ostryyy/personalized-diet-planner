@@ -1,19 +1,20 @@
 <div class="container mt-5">
   <div class="card p-4 shadow">
-    <h2 class="text-center mb-4">Set Your Goal</h2>
-    <form [formGroup]="goalForm" (ngSubmit)="onSubmit()">
+    <h2 class="text-center mb-4">User Information</h2>
+    <form [formGroup]="userInfoForm" (ngSubmit)="updateUserInformations()">
       <mat-form-field appearance="outline" class="w-100 mb-3">
-        <mat-label>Weight (kg)</mat-label>
+        <mat-label>Current Weight (kg)</mat-label>
         <input
           matInput
           type="number"
           formControlName="weight"
-          placeholder="Enter your weight"
+          placeholder="Enter your current weight"
         />
-        @if (goalForm.get('weight')?.hasError('required')) {
-        <mat-error>Weight is required</mat-error>
-        }@else if (goalForm.get('weight')?.hasError('min')) {<mat-error
-          >Minimum weight is 30 kg</mat-error
+
+        @if (userInfoForm.get('weight')?.hasError('required')) {<mat-error>
+          Weight is required </mat-error
+        >} @if (userInfoForm.get('weight')?.hasError('min')) {<mat-error>
+          Minimum weight is 30 kg </mat-error
         >}
       </mat-form-field>
 
@@ -25,10 +26,10 @@
           formControlName="height"
           placeholder="Enter your height"
         />
-        @if (goalForm.get('height')?.hasError('required')) {<mat-error
-          >Height is required</mat-error
-        >}@else if (goalForm.get('height')?.hasError('min')) {<mat-error
-          >Minimum height is 100 cm</mat-error
+        @if (userInfoForm.get('height')?.hasError('required')) {<mat-error>
+          Height is required </mat-error
+        >} @if (userInfoForm.get('height')?.hasError('min')) {<mat-error>
+          Minimum height is 100 cm </mat-error
         >}
       </mat-form-field>
 
@@ -39,18 +40,17 @@
           <mat-option value="gain">Gain Weight</mat-option>
           <mat-option value="maintain">Maintain Weight</mat-option>
         </mat-select>
-        @if (goalForm.get('goal')?.hasError('required')) {<mat-error
-          >Goal is required</mat-error
-        >}
+        @if (userInfoForm.get('goal')?.hasError('required')) {
+        <mat-error> Goal is required </mat-error>}
       </mat-form-field>
 
       <button
         mat-raised-button
         color="primary"
         class="w-100"
-        [disabled]="goalForm.invalid"
+        [disabled]="userInfoForm.invalid"
       >
-        Save Goal
+        Save Information
       </button>
     </form>
   </div>

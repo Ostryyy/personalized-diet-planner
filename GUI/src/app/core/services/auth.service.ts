@@ -43,12 +43,12 @@ export class AuthService {
     );
   }
 
-  updateUserGoal(goalData: {
+  updateUserInformations(informationsData: {
     weight: number;
     height: number;
     goal: 'lose' | 'gain' | 'maintain';
   }): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/profile`, goalData);
+    return this.http.put<User>(`${this.apiUrl}/profile`, informationsData);
   }
 
   isLoggedIn(): boolean {
