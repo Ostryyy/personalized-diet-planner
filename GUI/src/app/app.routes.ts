@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { goalGuard } from './core/guards/goal.guard';
+import { authRedirectGuard } from './core/guards/auth-redirect.guard';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
       import('./features/auth/login/login.component').then(
         (m) => m.LoginComponent
       ),
+    canActivate: [authRedirectGuard],
   },
   {
     path: 'register',
@@ -22,6 +24,7 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then(
         (m) => m.RegisterComponent
       ),
+    canActivate: [authRedirectGuard],
   },
   {
     path: 'settings',
