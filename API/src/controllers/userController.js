@@ -46,8 +46,15 @@ export const registerUser = async (req, res) => {
       res.status(201).json({
         _id: user.id,
         username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         token: generateToken(user.id),
+        goalsSet: user.goalsSet,
+        age: user.age,
+        gender: user.gender,
+        activityLevel: user.activityLevel,
+        dailyCalories: user.dailyCalories,
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -57,6 +64,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -65,8 +73,19 @@ export const loginUser = async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user.id,
-      name: user.name,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
+      age: user.age,
+      gender: user.gender,
+      activityLevel: user.activityLevel,
+      weight: user.weight,
+      height: user.height,
+      goal: user.goal,
+      goalsSet: user.goalsSet,
+      weightHistory: user.weightHistory,
+      dietType: user.dietType,
       dailyCalories: user.dailyCalories,
       token: generateToken(user.id),
     });
@@ -75,20 +94,34 @@ export const loginUser = async (req, res) => {
   }
 };
 
+
 export const getUserProfile = async (req, res) => {
   const user = await User.findById(req.user.id);
 
   if (user) {
     res.status(200).json({
       _id: user.id,
-      name: user.name,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
+      age: user.age,
+      gender: user.gender,
+      activityLevel: user.activityLevel,
+      weight: user.weight,
+      height: user.height,
+      goal: user.goal,
+      goalsSet: user.goalsSet,
+      weightHistory: user.weightHistory,
+      dietType: user.dietType,
       dailyCalories: user.dailyCalories,
     });
   } else {
     res.status(404).json({ message: "User not found" });
   }
 };
+
+
 
 export const updateUserProfile = async (req, res) => {
   const userId = req.user.id;
@@ -141,6 +174,8 @@ export const updateUserProfile = async (req, res) => {
     res.status(200).json({
       _id: updatedUser.id,
       username: updatedUser.username,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
       email: updatedUser.email,
       weight: updatedUser.weight,
       height: updatedUser.height,
@@ -159,6 +194,7 @@ export const updateUserProfile = async (req, res) => {
   }
 };
 
+
 export const updateUserWeight = async (req, res) => {
   const userId = req.user.id;
   const { weight } = req.body;
@@ -171,6 +207,7 @@ export const updateUserWeight = async (req, res) => {
     }
 
     user.weightHistory.push({ weight });
+    user.weight = weight;
 
     await user.save();
 
@@ -182,6 +219,7 @@ export const updateUserWeight = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const deleteUser = async (req, res) => {
   const user = await User.findById(req.user.id);

@@ -35,7 +35,6 @@ export class MealPlanComponent {
         next: (plan) => {
           if (plan && Object.keys(plan.mealPlan).length > 0) {
             this.mealPlan = plan.mealPlan;
-            console.log(this.mealPlan);
           } else {
             this.mealPlan = null;
             this.toastr.info('No meal plan found. Please generate a new one.');

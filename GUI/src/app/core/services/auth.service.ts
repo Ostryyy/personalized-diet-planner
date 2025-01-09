@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
@@ -65,13 +65,18 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  initUserProfile(): void {
+  initUserProfile(): Observable<User> {
     const token = localStorage.getItem('token');
     if (token) {
-      this.getUserProfile().subscribe({
-        next: () => console.log('User profile loaded'),
-        error: () => console.error('Failed to load user profile'),
-      });
+      return this.getUserProfile().pipe(
+        tap(() => console.log('User profile loaded')),
+        catchError((error) => {
+          console.error('Failed to load user profile', error);
+          return of();
+        })
+      );
+    } else {
+      return of();
     }
   }
 
