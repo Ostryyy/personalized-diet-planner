@@ -86,6 +86,7 @@ export const getUserProfile = async (req, res) => {
       height: user.height,
       goal: user.goal,
       goalsSet: user.goalsSet,
+      mealPlans: user.mealPlans
     });
   } else {
     res.status(404).json({ message: "User not found" });

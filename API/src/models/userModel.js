@@ -56,6 +56,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    mealPlans: {
+      date: { type: Date, default: Date.now },
+      plan: { type: Object, required: true },
+    },
   },
   {
     timestamps: true,
