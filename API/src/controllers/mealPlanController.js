@@ -1,4 +1,7 @@
-import { generateMealPlan } from "../services/spoonacularService.js";
+import {
+  generateMealPlan,
+  getRecipeInformation,
+} from "../services/spoonacularService.js";
 import User from "../models/userModel.js";
 
 export const generateMealPlanForUser = async (req, res) => {
@@ -27,6 +30,21 @@ export const generateMealPlanForUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Error generating meal plan:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getRecipeDetails = async (req, res) => {
+  const { recipeId } = req.params;
+
+  if (!recipeId) {
+    return res.status(400).json({ message: "Recipe ID is required" });
+  }
+
+  try {
+    const recipe = await getRecipeInformation(recipeId);
+    res.status(200).json(recipe);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

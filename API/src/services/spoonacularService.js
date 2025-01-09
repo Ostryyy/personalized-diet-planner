@@ -24,7 +24,7 @@ export const getSpoonacularToken = async (
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.SPOONACULAR_API_KEY,
+          "x-api-key": SPOONACULAR_API_KEY,
         },
       }
     );
@@ -70,6 +70,35 @@ export const generateMealPlan = async (diet, calories, excludes) => {
     } else {
       console.error("Error setting up the request:", error.message);
       throw new Error("Error setting up the request.");
+    }
+  }
+};
+
+export const getRecipeInformation = async (id) => {
+  try {
+    const response = await axios.get(
+      `https://api.spoonacular.com/recipes/informationBulk`,
+      {
+        params: {
+          ids: id,
+          includeNutrition: true,
+          apiKey: SPOONACULAR_API_KEY,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data[0]; 
+  } catch (error) {
+    if (error.response) {
+      console.error("Spoonacular API Error:", error.response.data);
+      throw new Error(
+        `Spoonacular API Error: ${error.response.status} - ${error.response.data.message}`
+      );
+    } else {
+      throw new Error("Failed to connect to Spoonacular API");
     }
   }
 };
