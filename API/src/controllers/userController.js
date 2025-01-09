@@ -86,7 +86,7 @@ export const getUserProfile = async (req, res) => {
       height: user.height,
       goal: user.goal,
       goalsSet: user.goalsSet,
-      mealPlans: user.mealPlans
+      mealPlans: user.mealPlans,
     });
   } else {
     res.status(404).json({ message: "User not found" });
@@ -95,7 +95,6 @@ export const getUserProfile = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   const userId = req.user.id;
-
   const { weight, height, goal } = req.body;
 
   try {
@@ -105,7 +104,11 @@ export const updateUserProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.weight = weight || user.weight;
+    if (weight) {
+      user.weightHistory.push({ weight });
+      user.weight = weight;
+    }
+
     user.height = height || user.height;
     user.goal = goal || user.goal;
 
@@ -122,7 +125,32 @@ export const updateUserProfile = async (req, res) => {
       weight: updatedUser.weight,
       height: updatedUser.height,
       goal: updatedUser.goal,
+      weightHistory: updatedUser.weightHistory,
       goalsSet: updatedUser.goalsSet,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateUserWeight = async (req, res) => {
+  const userId = req.user.id;
+  const { weight } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.weightHistory.push({ weight });
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Weight updated successfully",
+      weightHistory: user.weightHistory,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

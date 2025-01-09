@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+const weightEntrySchema = mongoose.Schema({
+  weight: { type: Number, required: true },
+  date: { type: Date, default: Date.now },
+});
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -60,6 +65,7 @@ const userSchema = new mongoose.Schema(
       date: { type: Date, default: Date.now },
       plan: { type: Object, required: true },
     },
+    weightHistory: [weightEntrySchema],
   },
   {
     timestamps: true,

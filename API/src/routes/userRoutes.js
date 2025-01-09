@@ -5,6 +5,7 @@ import {
   updateUserProfile,
   getUserProfile,
   deleteUser,
+  updateUserWeight,
 } from "../controllers/userController.js";
 import { protect } from "../utils/authMiddleware.js";
 
@@ -17,6 +18,8 @@ router.post("/login", loginUser);
 router.get("/profile", protect, getUserProfile);
 
 router.put("/profile", protect, updateUserProfile);
+
+router.put("/weight", protect, updateUserWeight);
 
 router.delete("/delete", protect, deleteUser);
 
