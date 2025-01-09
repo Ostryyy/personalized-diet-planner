@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from 'ngx-toastr';
 import { WeeklyMealPlan } from '../../core/models/meal.model';
 import { MealPlanService } from '../../core/services/meal.service';
-import { TitleCasePipe } from '@angular/common';
+import { DecimalPipe, TitleCasePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-meal-plan',
   standalone: true,
-  imports: [TitleCasePipe, MatCardModule, MatButtonModule],
+  imports: [TitleCasePipe, DecimalPipe, MatCardModule, MatButtonModule],
   templateUrl: './meal-plan.component.html',
   styleUrl: './meal-plan.component.scss',
 })
@@ -35,6 +35,7 @@ export class MealPlanComponent {
         next: (plan) => {
           if (plan && Object.keys(plan.mealPlan).length > 0) {
             this.mealPlan = plan.mealPlan;
+            console.log(this.mealPlan);
           } else {
             this.mealPlan = null;
             this.toastr.info('No meal plan found. Please generate a new one.');
