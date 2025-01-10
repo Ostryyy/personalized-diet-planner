@@ -64,7 +64,6 @@ export const registerUser = async (req, res) => {
   }
 };
 
-
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -94,7 +93,6 @@ export const loginUser = async (req, res) => {
   }
 };
 
-
 export const getUserProfile = async (req, res) => {
   const user = await User.findById(req.user.id);
 
@@ -120,8 +118,6 @@ export const getUserProfile = async (req, res) => {
     res.status(404).json({ message: "User not found" });
   }
 };
-
-
 
 export const updateUserProfile = async (req, res) => {
   const userId = req.user.id;
@@ -194,7 +190,6 @@ export const updateUserProfile = async (req, res) => {
   }
 };
 
-
 export const updateUserWeight = async (req, res) => {
   const userId = req.user.id;
   const { weight } = req.body;
@@ -220,12 +215,11 @@ export const updateUserWeight = async (req, res) => {
   }
 };
 
-
 export const deleteUser = async (req, res) => {
   const user = await User.findById(req.user.id);
 
   if (user) {
-    await user.remove();
+    await user.deleteOne();
     res.status(204).json({ message: "User account removed successfully" });
   } else {
     res.status(404).json({ message: "User not found" });
