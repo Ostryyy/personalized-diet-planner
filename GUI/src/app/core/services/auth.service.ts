@@ -9,7 +9,7 @@ import {
   throwError,
 } from 'rxjs';
 import { User } from '../models/user.model';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({

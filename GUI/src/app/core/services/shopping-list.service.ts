@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { ShoppingList } from '../models/shopping-list.model';
 
 @Injectable({
@@ -28,13 +28,21 @@ export class ShoppingListService {
     return this.http.post(`${this.apiUrl}/add-recipe`, { items: ingredients });
   }
 
-  removeItemFromShoppingList(ingredientId: number): Observable<{message: string, shoppingList: ShoppingList}> {
-    return this.http.delete<{message: string, shoppingList: ShoppingList}>(
+  removeItemFromShoppingList(
+    ingredientId: number
+  ): Observable<{ message: string; shoppingList: ShoppingList }> {
+    return this.http.delete<{ message: string; shoppingList: ShoppingList }>(
       `${this.apiUrl}/remove-item/${ingredientId}`
     );
   }
 
-  resetShoppingList(): Observable<{message: string, shoppingList: ShoppingList}> {
-    return this.http.post<{message: string, shoppingList: ShoppingList}>(`${this.apiUrl}/reset`, {});
+  resetShoppingList(): Observable<{
+    message: string;
+    shoppingList: ShoppingList;
+  }> {
+    return this.http.post<{ message: string; shoppingList: ShoppingList }>(
+      `${this.apiUrl}/reset`,
+      {}
+    );
   }
 }

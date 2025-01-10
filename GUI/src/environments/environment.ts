@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: process.env['API_URL'],
+  apiUrl: 'API_URL_PLACEHOLDER',
 };

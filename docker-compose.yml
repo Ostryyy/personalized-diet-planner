@@ -18,10 +18,12 @@ services:
   gui:
     build:
       context: ./GUI
+      args:
+        - API_URL=http://localhost:82/api
     ports:
       - "80:80"
     environment:
-      - API_URL=http://api:82
+      - API_URL=http://localhost:82/api
     depends_on:
       - api
 
