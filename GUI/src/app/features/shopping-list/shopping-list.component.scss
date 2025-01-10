@@ -1,0 +1,43 @@
+.shopping-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.shopping-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+
+  padding: 16px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+
+  min-height: 200px;
+}
+
+.shopping-item img {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.item-info {
+  margin-top: 8px;
+}
+
+.item-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.item-details {
+  color: #757575;
+  font-size: 14px;
+}
+
+.delete-button {
+  margin-top: auto;
+}

@@ -43,8 +43,18 @@
       <h4>Ingredients</h4>
       <ul>
         @for (ingredient of recipe.extendedIngredients; track $index) {
-        <li>
-          {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
+        <li class="d-flex justify-content-between align-items-center">
+          <span
+            >{{ ingredient.amount }} {{ ingredient.unit }}
+            {{ ingredient.name }}</span
+          >
+          <button
+            mat-button
+            color="accent"
+            (click)="addToShoppingList(ingredient)"
+          >
+            Add to Shopping List
+          </button>
         </li>
         }
       </ul>

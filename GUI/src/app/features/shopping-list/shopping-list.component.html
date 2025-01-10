@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <mat-card class="p-4 shadow">
+    <h2 class="text-center mb-4">Shopping List</h2>
+
+    @if (shoppingListItems && shoppingListItems.length > 0) {
+    <div class="shopping-list-grid">
+      @for (item of shoppingListItems; track $index) {
+      <div class="shopping-item">
+        @if (item.image) {<img
+          [src]="
+            'https://spoonacular.com/cdn/ingredients_100x100/' + item.image
+          "
+          alt="{{ item.name }}"
+        />}
+
+        <div class="item-info">
+          <div class="item-name">{{ item.name }}</div>
+          <div class="item-details">{{ item.amount }} {{ item.unit }}</div>
+        </div>
+
+        <button
+          mat-icon-button
+          color="warn"
+          class="delete-button"
+          (click)="removeItem(item.ingredientId)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      }
+    </div>
+
+    } @else {
+    <p class="text-center text-muted">Your shopping list is empty.</p>
+    }
+
+    <button
+      mat-raised-button
+      color="warn"
+      class="reset-button mt-4"
+      (click)="resetShoppingList()"
+    >
+      Reset Shopping List
+    </button>
+  </mat-card>
+</div>

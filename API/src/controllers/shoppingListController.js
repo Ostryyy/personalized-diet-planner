@@ -1,37 +1,29 @@
 import ShoppingList from "../models/shoppingList.model.js";
-import Recipe from "../models/recipe.model.js";
 
 export const addRecipeToShoppingList = async (req, res) => {
-  const { recipeId } = req.body;
+  const { items } = req.body;
   const userId = req.user.id;
 
   try {
-    const recipe = await Recipe.findById(recipeId);
-
-    if (!recipe) {
-      return res.status(404).json({ message: "Recipe not found" });
-    }
-
     let shoppingList = await ShoppingList.findOne({ userId });
-
     if (!shoppingList) {
       shoppingList = new ShoppingList({ userId, items: [] });
     }
 
-    recipe.extendedIngredients.forEach((ingredient) => {
+    items.forEach((ingredient) => {
       const existingItem = shoppingList.items.find(
-        (item) => item.ingredientId === ingredient.id
+        (item) => item.ingredientId === ingredient.ingredientId
       );
 
       if (existingItem) {
         existingItem.amount += ingredient.amount;
       } else {
         shoppingList.items.push({
-          ingredientId: ingredient.id,
+          ingredientId: ingredient.ingredientId,
           name: ingredient.name,
           amount: ingredient.amount,
           unit: ingredient.unit,
-          image: ingredient.image,
+          image: ingredient.image || "",
         });
       }
     });

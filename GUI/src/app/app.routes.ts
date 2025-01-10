@@ -51,6 +51,15 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'shopping-list',
+    loadComponent: () =>
+      import('./features/shopping-list/shopping-list.component').then(
+        (m) => m.ShoppingListComponent
+      ),
+    canActivate: [authGuard],
+  },
+
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
