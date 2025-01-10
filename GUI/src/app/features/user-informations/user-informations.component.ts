@@ -63,7 +63,7 @@ export class UserInformationsComponent {
     this.authService.currentUser$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((user) => {
-        if (user) {
+        if (user && user.goalsSet) {
           this.isFormPreFilled = true;
           this.userInfoForm.patchValue({
             weight: user.weight || null,
