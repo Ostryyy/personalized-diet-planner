@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./API
+    ports:
+      - "82:82"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./API/.env
+    volumes:
+      - ./API:/app
+    depends_on:
+      - mongo
+
+  gui:
+    build:
+      context: ./GUI
+    ports:
+      - "80:80"
+
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
