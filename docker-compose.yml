@@ -20,6 +20,10 @@ services:
       context: ./GUI
     ports:
       - "80:80"
+    environment:
+      - API_URL=http://api:82
+    depends_on:
+      - api
 
   mongo:
     image: mongo:5.0
