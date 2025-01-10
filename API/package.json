@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "node --experimental-modules node_modules/.bin/playwright test"
+    "test": "npx playwright test tests/user.spec.js && npx playwright test tests/mealPlanController.spec.js && npx playwright test tests/shoppingListController.spec.js"
   },
   "author": "",
   "license": "ISC",
